@@ -1,7 +1,6 @@
 # ---- Stage 1: Build with Bun ----
-FROM jarredsumner/bun:latest AS build
+FROM bun:latest AS build
 
-# Set working directory
 WORKDIR /app
 
 # Copy project files
@@ -25,11 +24,5 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy built dist from Bun build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Optional: copy a custom nginx.conf if needed
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose port 80
 EXPOSE 80
-
-# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
